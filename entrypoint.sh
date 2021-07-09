@@ -47,6 +47,7 @@ function find_workflow {
   conclusion=$(echo $workflow | jq '.conclusion')
   
   echo "Workflow id is ${wfid}"
+  echo "Check run on https://github.com/${INPUT_OWNER}/${INPUT_REPO}/actions/runs/${wfid}"
 }
 
 function wait_on_workflow {
@@ -75,9 +76,17 @@ function wait_on_workflow {
 }
 
 function main {
+  echo "::group::Trigger workflow"
   trigger_workflow
+  echo "::endgroup::"
+
+  echo "::group::Find Workflow"
   find_workflow
+  echo "::endgroup::"
+
+  echo "::group::Wait on Workflow"
   wait_on_workflow
+  echo "::endgroup::"
 }
 
 main
