@@ -18,7 +18,7 @@ inputs:
     default: "{}"
     required: false
   wait_time:
-    description: 'How long to wait between polls'
+    description: 'How long to wait between pulls'
     default: "10"
     required: false
   max_time:

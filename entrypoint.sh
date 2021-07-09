@@ -60,12 +60,12 @@ function wait_on_workflow {
     fi
 
     echo "Check run on https://github.com/${INPUT_OWNER}/${INPUT_REPO}/actions/runs/${wfid}"
-    sleep 1s
+    sleep $INPUT_WAIT_TIME
 
     conclusion=$(curl -s "https://api.github.com/repos/${INPUT_OWNER}/${INPUT_REPO}/actions/runs/${wfid}" \
     	-H "Accept: application/vnd.github.v3+json" \
     	-H "Authorization: Bearer ${INPUT_TOKEN}" | jq '.conclusion')
-    counter=$(( $counter + 1 ))
+    counter=$(( $counter + $INPUT_WAIT_TIME ))
   done
 
   if [[ $conclusion == "\"success\"" ]]
