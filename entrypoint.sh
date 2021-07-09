@@ -47,7 +47,6 @@ function find_workflow {
   conclusion=$(echo $workflow | jq '.conclusion')
   
   echo "Workflow id is ${wfid}"
-  echo "Check run on https://github.com/${INPUT_OWNER}/${INPUT_REPO}/actions/runs/${wfid}"
 }
 
 function wait_on_workflow {
@@ -59,11 +58,14 @@ function wait_on_workflow {
       echo "Time limit exceeded"
       exit 1
     fi
-    sleep $INPUT_WAIT_TIME
+
+    echo "Check run on https://github.com/${INPUT_OWNER}/${INPUT_REPO}/actions/runs/${wfid}"
+    sleep 1s
+
     conclusion=$(curl -s "https://api.github.com/repos/${INPUT_OWNER}/${INPUT_REPO}/actions/runs/${wfid}" \
     	-H "Accept: application/vnd.github.v3+json" \
     	-H "Authorization: Bearer ${INPUT_TOKEN}" | jq '.conclusion')
-    counter=$(( $counter + $INPUT_WAIT_TIME ))
+    counter=$(( $counter + 1 ))
   done
 
   if [[ $conclusion == "\"success\"" ]]
