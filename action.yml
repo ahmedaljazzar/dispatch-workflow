@@ -1,7 +1,8 @@
 name: 'Dispatch and wait on workflow'
 description: 'Trigger a workflow and then wait for it to succeed before proceeding'
-icon: arrow-up
-color: yellow
+branding:
+  icon: 'arrow-up'
+  color: 'yellow'
 inputs:
   owner:
     description: 'Owner of the GitHub repo'
